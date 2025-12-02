@@ -137,6 +137,7 @@ namespace BlasterBot
             {
                 dispatcherTimer.Stop();
                 int interval = Convert.ToInt32(TBXdelayTime.Text);
+                maxDifference = Convert.ToInt32(TBXsimilarityPct.Text);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, interval);
                 dispatcherTimer.Start();
                 running = true;

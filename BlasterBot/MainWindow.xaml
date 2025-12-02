@@ -11,8 +11,16 @@
             <TextBlock DockPanel.Dock="Top">Point at upper left and press 1.  Point at bottom right  and press 2.</TextBlock>
             <TextBlock DockPanel.Dock="Top" Name="TBtopLeft">Top left: [unassigned]</TextBlock>
             <TextBlock DockPanel.Dock="Top" Name="TBbottomRight">Bottom right: [unassigned]</TextBlock>
-            <TextBlock DockPanel.Dock="Top">Delay time:</TextBlock>
-            <TextBox DockPanel.Dock="Top" Width="100px" HorizontalAlignment="Left" Name="TBXdelayTime">10</TextBox>
+            <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">
+                <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Vertical">
+                    <TextBlock DockPanel.Dock="Top">Delay time:</TextBlock>
+                    <TextBox DockPanel.Dock="Top" Width="100px" HorizontalAlignment="Left" Name="TBXdelayTime">10</TextBox>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Vertical">
+                    <TextBlock DockPanel.Dock="Top" Text="Max difference %"/>
+                    <TextBox DockPanel.Dock="Top" Width="100px" HorizontalAlignment="Left" Name="TBXsimilarityPct">10</TextBox>
+                </StackPanel>
+            </StackPanel>
             <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Button Width="100px" Click="Classic_Click" >Classic</Button>
                 <Button Width="100px" Click="Lightning_Click" >Lightning</Button>
