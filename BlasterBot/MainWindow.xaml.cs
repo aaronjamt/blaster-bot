@@ -204,11 +204,11 @@ namespace BlasterBot
                     int y2 = 0;
                     GemBoard gemBoard = screenReader.readScreen();
                     displayColorGrid(gemBoard);
-                    if (gemBoard.findMove(ref x1, ref y1, ref x2, ref y2))
-                    {
-                        mouseController.matchTwo(x1, y1, x2, y2);
-                    }
-                }
+                                            if (gemBoard.findMove(ref x1, ref y1, ref x2, ref y2))
+                        {
+                            mouseController.matchTwo(x1, y1, x2, y2);
+                                            }
+                                    }
                 else
                 {
                     displayColorGrid(screenReader.readScreen());
@@ -234,6 +234,15 @@ namespace BlasterBot
                 else if (objKeyInfo.key == Keys.D2)
                 {
                     setBottomRight();
+                }
+                else if (objKeyInfo.key == Keys.Escape && running)
+                {
+                    dispatcherTimer.Stop();
+                    int interval = Convert.ToInt32(TBXdelayTime.Text);
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+                    dispatcherTimer.Start();
+                    running = false;
+                    BNbegin.Content = "Begin";
                 }
             }
             return CallNextHookEx(ptrHook, nCode, wp, lp);
