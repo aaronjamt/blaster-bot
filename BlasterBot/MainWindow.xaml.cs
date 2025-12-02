@@ -56,11 +56,14 @@ namespace BlasterBot
         BoardPosition boardPosition;
         ScreenReader screenReader;
         MouseController mouseController;
+        GemBoard lastGemBoard = null;
 
         bool point1Assigned = false;
         bool point2Assigned = false;
         bool running = false;
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
+        int maxDifference = 20;
 
         public MainWindow()
         {
@@ -204,11 +207,15 @@ namespace BlasterBot
                     int y2 = 0;
                     GemBoard gemBoard = screenReader.readScreen();
                     displayColorGrid(gemBoard);
-                                            if (gemBoard.findMove(ref x1, ref y1, ref x2, ref y2))
+                    if (gemBoard.ApproximatelyEquals(lastGemBoard, maxDifference))
+                    {
+                        if (gemBoard.findMove(ref x1, ref y1, ref x2, ref y2))
                         {
                             mouseController.matchTwo(x1, y1, x2, y2);
-                                            }
-                                    }
+                        }
+                    }
+                    lastGemBoard = gemBoard;
+                }
                 else
                 {
                     displayColorGrid(screenReader.readScreen());

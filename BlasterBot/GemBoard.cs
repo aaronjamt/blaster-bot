@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace BlasterBot
 {
@@ -37,11 +38,11 @@ namespace BlasterBot
         }
         public bool findMove(ref int x1, ref int y1, ref int x2, ref int y2)
         {
-            if(findMove(true, ref x1, ref y1, ref x2, ref y2))
+            if (findMove(true, ref x1, ref y1, ref x2, ref y2))
             {
                 return true;
             }
-            else if(findMove(false, ref x1, ref y1, ref x2, ref y2))
+            else if (findMove(false, ref x1, ref y1, ref x2, ref y2))
             {
                 return true;
             }
@@ -58,7 +59,7 @@ namespace BlasterBot
                 for (int Offset2 = 0; Offset2 < 6; Offset2++)
                 {
                     int search2 = (start2 + Offset2) % 8;
-                    if(findMove(vertical, search1, search2, ref x1, ref y1, ref x2, ref y2))
+                    if (findMove(vertical, search1, search2, ref x1, ref y1, ref x2, ref y2))
                     {
                         return true;
                     }
@@ -66,7 +67,7 @@ namespace BlasterBot
             }
             return false;
         }
-        private bool findMove(bool vertical, int search1, int search2, 
+        private bool findMove(bool vertical, int search1, int search2,
                               ref int x1, ref int y1, ref int x2, ref int y2)
         {
             int x = search1;
@@ -97,7 +98,7 @@ namespace BlasterBot
                     setPoint(x + longDirX * 2 - shortDirX, y + longDirY * 2 - shortDirY, ref x2, ref y2);
                     return true;
                 }
-                if(checkEqual(x, y, x + longDirX * 3, y + longDirY * 3))
+                if (checkEqual(x, y, x + longDirX * 3, y + longDirY * 3))
                 {
                     setPoint(x + longDirX * 3, y + longDirY * 3, ref x2, ref y2);
                     return true;
@@ -145,7 +146,7 @@ namespace BlasterBot
         }
         private bool checkEqual(int cx1, int cy1, int cx2, int cy2)
         {
-            if(!isValidCoord(cx1)|| !isValidCoord(cy1) || 
+            if (!isValidCoord(cx1) || !isValidCoord(cy1) ||
                !isValidCoord(cx2) || !isValidCoord(cy2))
             {
                 return false;
@@ -215,6 +216,33 @@ namespace BlasterBot
             {
                 return "3";
             }
+        }
+
+
+        private static int CompareColors(Color a, Color b)
+        {
+            return 100 * (int)(
+                ((double)(
+                    Math.Abs(a.R - b.R) +
+                    Math.Abs(a.G - b.G) +
+                    Math.Abs(a.B - b.B)
+                ) / (256.0 * 3))
+            );
+        }
+
+        public bool ApproximatelyEquals(GemBoard other, int maxDifference)
+        {
+            if (other == null) return false;
+            for (int gridX = 0; gridX < 8; gridX++)
+                for (int gridY = 0; gridY < 8; gridY++)
+                {
+                    int diff = CompareColors(
+                        gemColors[gridX, gridY],
+                        other.getColor(gridX, gridY)
+                        );
+                    if (diff > maxDifference) return false;
+                }
+            return true;
         }
     }
 }
